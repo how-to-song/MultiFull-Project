@@ -3,10 +3,11 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    public Vector2 inputVec;
-    public float speed;
+    [Header("이동 관련")]
+    public float speed = 5f;          // 이동 속도
+    private Vector2 inputVec;         // 입력 벡터
 
-    Rigidbody2D rigid;
+    private Rigidbody2D rigid;
 
     private void Awake()
     {
@@ -15,12 +16,14 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 입력값이 있을 경우 이동
         Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
     }
 
-    private void OnMove(InputValue value)
+    // Input System에서 Move 액션이 호출될 때 실행됨
+    private void OnMove(InputAction.CallbackContext context)
     {
-        inputVec = value.Get<Vector2>();
+        inputVec = context.ReadValue<Vector2>();
     }
 }

@@ -22,8 +22,8 @@ public class Player : MonoBehaviour
     }
 
     // Input System에서 Move 액션이 호출될 때 실행됨
-    private void OnMove(InputAction.CallbackContext context)
+    private void OnMove(InputValue value)
     {
-        inputVec = context.ReadValue<Vector2>();
+        inputVec = value.Get<Vector2>();
     }
 }

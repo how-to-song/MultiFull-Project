@@ -36,6 +36,9 @@ public class Player : MonoBehaviour
         if (rigid.position.y >= maxY)
             rigid.MovePosition(new Vector2(rigid.position.x, maxY - 0.01f));
 
+        // 총알 발사
+        GameManager.instance.bulletGenerator.Shoot();
+
     }
 
     // Input System에서 Move 액션이 호출될 때 실행됨

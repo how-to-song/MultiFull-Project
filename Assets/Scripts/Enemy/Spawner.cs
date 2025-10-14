@@ -10,11 +10,11 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             GameManager.instance.enemySpawnPool.Get(1);
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             GameManager.instance.enemySpawnPool.Get(0);
         }

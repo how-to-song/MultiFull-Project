@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    private Transform[] spawnPoints;
+    public Transform[] spawnPoints;
     private float spawnTimer = 0f;
 
     void Start()

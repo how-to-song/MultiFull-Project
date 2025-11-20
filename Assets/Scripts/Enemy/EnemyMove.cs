@@ -40,7 +40,7 @@ public class EnemyMove : MonoBehaviour
     private void Move()
     {
         float distance = Vector2.Distance(target.position, rb.position);
-        print(distance);
+        // print(distance);
         if (distance < patrolDis)
         {
             Vector2 chaseDir = (target.position - rb.position).normalized;

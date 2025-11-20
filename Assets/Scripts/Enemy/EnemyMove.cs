@@ -5,24 +5,19 @@ public class EnemyMove : MonoBehaviour
     private float speed = 3.0f;
     private int dir = -1;
     private float patrolDis = 15.0f;
-    private Vector2 startPos;
-
-    private bool isChasing = false;
+    private float stopDis = 1.4f;
+    float distance;
+    private bool isTracking = false;
 
     private Rigidbody2D rb;
-    //enemy¿ë ¸®Áö¹Ùµğ
+    //enemyìš© ë¦¬ì§€ë°”ë””
     public Rigidbody2D target;
-    //Ãß°İÇÒ ÇÃ·¹ÀÌ¾î ¸®Áö¹Ùµğ
+    //ì¶”ê²©í•  í”Œë ˆì´ì–´ ë¦¬ì§€ë°”ë””
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    void Update()
-    {
-
     }
 
     void FixedUpdate()
@@ -33,8 +28,8 @@ public class EnemyMove : MonoBehaviour
     void OnEnable()
     {
         target = GameManager.instance.player.GetComponent<Rigidbody2D>();
-        //ÇÁ¸®ÆÕ »óÅÂ³¢¸®´Â ¿¬°áÀÌ µÇÁö¸¸ Àå¸éÀ§¿¡ ÀÌ¹Ì ¿Ã¶ó°£ °ÍµéÀº ¿¬°áÀÌ ¾Èµµ´Ï ¿©±â¼­ ÇÃ·¹ÀÌ¾îÀÇ ¸®Áö¹Ùµğ¸¦ ¿¬°á
-        //¿©±â¼­ ´Ù½Ã ¿¬°á/ ÀÎ½ºÆåÅÍ¿¡¼­ ¿¬°áÇÏ´õ¶ó´õ ¿¬°áÀÌ ¾ÈµÊ.
+        //í”„ë¦¬íŒ¹ ìƒíƒœë¼ë¦¬ëŠ” ì—°ê²°ì´ ë˜ì§€ë§Œ ì¥ë©´ìœ„ì— ì´ë¯¸ ì˜¬ë¼ê°„ ê²ƒë“¤ì€ ì—°ê²°ì´ ì•ˆë„ë‹ˆ ì—¬ê¸°ì„œ í”Œë ˆì´ì–´ì˜ ë¦¬ì§€ë°”ë””ë¥¼ ì—°ê²°
+        //ì—¬ê¸°ì„œ ë‹¤ì‹œ ì—°ê²°/ ì¸ìŠ¤í™í„°ì—ì„œ ì—°ê²°í•˜ë”ë¼ë” ì—°ê²°ì´ ì•ˆë¨.
     }
 
     private void Move()
@@ -42,7 +37,21 @@ public class EnemyMove : MonoBehaviour
         float distance = Vector2.Distance(target.position, rb.position);
         // print(distance);
         if (distance < patrolDis)
+        distance = Vector2.Distance(target.position, rb.position);
+
+        if (distance <= stopDis)
         {
+            isTracking = false;
+        }
+        else if (distance <= patrolDis)
+        {
+            isTracking = true;
+        }
+
+
+        if (isTracking)
+        {
+
             Vector2 chaseDir = (target.position - rb.position).normalized;
             rb.linearVelocity = chaseDir * speed;
         }

@@ -6,9 +6,14 @@ public class EnemyMove : MonoBehaviour
     private int dir = -1;
     private float patrolDis = 15.0f;
     private float stopDis = 1.4f;
-    float distance;
+    private float distance;
+    private float currentHealth;
+    private float attack;
+
+    private bool facingRight = false;
     private bool isTracking = false;
 
+    public EnemyInfo data;    
     private Rigidbody2D rb;
     //enemy용 리지바디
     public Rigidbody2D target;
@@ -17,48 +22,59 @@ public class EnemyMove : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        target = GameManager.instance.player.GetComponent<Rigidbody2D>();
         rb = GetComponent<Rigidbody2D>();
+        currentHealth = data.maxHealth;
+        attack = data.attackDamage;
+    }
+
+    private void Update()
+    {
+        distance = Vector2.Distance(target.position, rb.position);
+
+        if (!facingRight)
+        {
+            if (!isTracking && distance < patrolDis && distance > stopDis)
+            {
+                isTracking = true;
+            }
+
+            // 2) 추격 중일 때, 너무 가까워지면 추격 종료 + 영구 종료 플래그
+            if (isTracking && distance <= stopDis)
+            {
+                isTracking = false;
+                facingRight = true;     // ★ 여기서부터는 다시는 추격 안 함
+            }
+        }
+        else
+        {
+            isTracking = false;
+        }
+
     }
 
     void FixedUpdate()
     {
-        Move();
-    }
-
-    void OnEnable()
-    {
-        target = GameManager.instance.player.GetComponent<Rigidbody2D>();
-        //프리팹 상태끼리는 연결이 되지만 장면위에 이미 올라간 것들은 연결이 안도니 여기서 플레이어의 리지바디를 연결
-        //여기서 다시 연결/ 인스펙터에서 연결하더라더 연결이 안됨.
-    }
-
-    private void Move()
-    {
-        float distance = Vector2.Distance(target.position, rb.position);
-        // print(distance);
-        if (distance < patrolDis)
-        distance = Vector2.Distance(target.position, rb.position);
-
-        if (distance <= stopDis)
-        {
-            isTracking = false;
-        }
-        else if (distance <= patrolDis)
-        {
-            isTracking = true;
-        }
-
-
         if (isTracking)
         {
-
-            Vector2 chaseDir = (target.position - rb.position).normalized;
-            rb.linearVelocity = chaseDir * speed;
+            ChaseMove();
         }
         else
         {
-            rb.linearVelocity = new Vector2(dir * speed, rb.linearVelocity.y);
+            StraightMove();
         }
-
     }
+
+
+    private void StraightMove()
+    {
+        rb.linearVelocity = new Vector2(dir * speed, 0);
+    }
+
+    private void ChaseMove()
+    {
+        Vector2 chaseDir = (target.position - rb.position).normalized;
+        rb.linearVelocity = chaseDir * speed;
+    }
+
 }

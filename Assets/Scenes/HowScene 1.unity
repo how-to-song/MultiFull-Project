@@ -392,6 +392,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5954000033596662205, guid: 9adb460637ba60d4e8870310caa6c625, type: 3}
   m_PrefabInstance: {fileID: 356702354896218197}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &689241438 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1231156300562300025, guid: 9adb460637ba60d4e8870310caa6c625, type: 3}
+  m_PrefabInstance: {fileID: 356702354896218197}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035c9d8264cf3164794516f024ad22e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &913040967 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6327181325664966822, guid: 0112339cedc3dfa43b511f778745b2f1, type: 3}
@@ -647,6 +658,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6195393606109526911, guid: b7571a41d9452444bbf722a9611f5eb7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 689241438}
     - target: {fileID: 6195393606109526911, guid: b7571a41d9452444bbf722a9611f5eb7, type: 3}
       propertyPath: enemySpawnPool
       value: 
